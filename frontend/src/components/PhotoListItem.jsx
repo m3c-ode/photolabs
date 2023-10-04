@@ -15,11 +15,11 @@ const PhotoListItem = (props) => {
   return (
     <div key={photoData.id} className="photo-list__item">
       <PhotoFavButton />
-      <img className="photo-list__image" src={photoData.imageSource} alt="img" />
+      <img className="photo-list__image" src={photoData.urls.regular} alt="img" />
       <div className="photo-list__user-details">
-        <img className="photo-list__user-profile" src={photoData.profile} alt="profile" />
+        <img className="photo-list__user-profile" src={photoData.user.profile} alt="profile" />
         <article className="photo-list__user-info">
-          <span>{photoData.username}</span>
+          <span>{photoData.user.username}</span>
           <div className="photo-list__user-location">{photoData.location.city}, {photoData.location.country}</div>
         </article>
       </div>
