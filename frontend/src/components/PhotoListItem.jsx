@@ -13,8 +13,13 @@ const PhotoListItem = (props) => {
 
   const [selected, setSelected] = useState(false);
   const handleIconClick = () => {
+    // if already selected, remove from list (filter)
+    if (selected) {
+      props.setFavorites((favorites) => favorites.filter(photo => photo.id !== photoData.id));
+    } else {
+      props.setFavorites((favorites) => [...favorites, photoData]);
+    }
     setSelected(!selected);
-    props.setFavorites((favorites) => [...favorites, photoData]);
   };
 
   return (
