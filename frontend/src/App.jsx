@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import HomeRoute from 'routes/HomeRoute';
 import photos from 'mocks/photos';
 import topics from 'mocks/topics';
+import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 
 // Note: Rendering a single component to build components in isolation
 const App = () => {
@@ -11,17 +12,32 @@ const App = () => {
 
   const mockTopics = topics;
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const displayModal = () => {
+
+  };
+
   return (
     <div className="App">
-      {/* <HomeRoute>
-        <TopNavigation>
-          <TopicList topicList={mockTopics} />
-          // {/* IF there's a favorite, add to is
-          <FavBadge isFavPhotoExist={!!favorites.length}/>
-        </TopNavigation>
-        <PhotoList photoDataList={mockPhotos} />
-      </HomeRoute> */}
-      <HomeRoute topicList={mockTopics} photoList={mockPhotos} />
+      {/* {isModalVisible ?
+        <PhotoDetailsModal
+          displayModal={setIsModalVisible}
+        />
+        :
+        <HomeRoute
+          displayModal={setIsModalVisible}
+          topicList={mockTopics}
+          photoList={mockPhotos}
+        />
+      } */}
+
+      <HomeRoute
+        displayModal={setIsModalVisible}
+        topicList={mockTopics}
+        photoList={mockPhotos}
+      />
+      {isModalVisible && <PhotoDetailsModal displayModal={setIsModalVisible} />}
     </div>
   );
 };

@@ -25,7 +25,7 @@ const PhotoListItem = (props) => {
   return (
     <div className="photo-list__item">
       <PhotoFavButton onClick={handleIconClick} selected={selected} />
-      <img className="photo-list__image" src={photoData.urls.regular} alt="img" />
+      <img onClick={() => props.displayModal(true)} className="photo-list__image" src={photoData.urls.regular} alt="img" />
       <div className="photo-list__user-details">
         <img className="photo-list__user-profile" src={photoData.user.profile} alt="profile" />
         <article className="photo-list__user-info">

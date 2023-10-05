@@ -12,10 +12,7 @@ const PhotoList = (props) => {
   const { photoDataList } = props;
 
   const [selected, setSelected] = useState(false);
-  // const handleIconClick = () => {
-  //   setSelected(!selected);
-  //   // props.setFavorites(...props.favorites, photoData);
-  // };
+
 
   return (
     <ul className="photo-list">
@@ -28,6 +25,7 @@ const PhotoList = (props) => {
             photoData={photoData}
             // onClick={handleIconClick}
             setFavorites={props.setFavorites}
+            displayModal={props.displayModal}
           // selected={selected}
           />
         </li>
