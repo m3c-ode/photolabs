@@ -6,7 +6,7 @@ import FavBadge from 'components/FavBadge';
 
 import '../styles/HomeRoute.scss';
 
-const HomeRoute = ({ topicList, photoList, displayModal }) => {
+const HomeRoute = ({ topicList, photoList, displayModal, setPhotoData }) => {
 
   const [favorites, setFavorites] = useState([]);
   const [isFavoritesSelected, setIsFavoritesSelected] = useState(false);
@@ -32,6 +32,7 @@ const HomeRoute = ({ topicList, photoList, displayModal }) => {
         setFavorites={setFavorites}
         photoDataList={isFavoritesSelected ? favorites : photoList}
         displayModal={displayModal}
+        setPhotoData={setPhotoData}
       />
     </div>
   );

@@ -23,6 +23,8 @@ const PhotoList = (props) => {
             key={photoData.id}
             // favorites={props.favorites}
             photoData={photoData}
+            setPhotoData={props.setPhotoData}
+
             // onClick={handleIconClick}
             setFavorites={props.setFavorites}
             displayModal={props.displayModal}

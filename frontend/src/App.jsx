@@ -13,6 +13,7 @@ const App = () => {
   const mockTopics = topics;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [photoData, setPhotoData] = useState(null);
 
   const displayModal = () => {
 
@@ -20,24 +21,14 @@ const App = () => {
 
   return (
     <div className="App">
-      {/* {isModalVisible ?
-        <PhotoDetailsModal
-          displayModal={setIsModalVisible}
-        />
-        :
-        <HomeRoute
-          displayModal={setIsModalVisible}
-          topicList={mockTopics}
-          photoList={mockPhotos}
-        />
-      } */}
-
       <HomeRoute
         displayModal={setIsModalVisible}
         topicList={mockTopics}
         photoList={mockPhotos}
+        setPhotoData={setPhotoData}
       />
-      {isModalVisible && <PhotoDetailsModal displayModal={setIsModalVisible} />}
+      {isModalVisible &&
+        <PhotoDetailsModal displayModal={setIsModalVisible} photoData={photoData} />}
     </div>
   );
 };
