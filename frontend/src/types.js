@@ -15,5 +15,9 @@
  */
 
 /**
+ * @typedef {PhotoData & {similar_photos: Object.<string, PhotoData>}} PhotoDataList
+ */
+
+/**
  * @typedef  {{id: string, slug: string, title: string}} TopicData
  */

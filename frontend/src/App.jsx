@@ -7,20 +7,27 @@ import TopicList from 'components/TopicList';
 import TopNavigation from 'components/TopNavigationBar';
 import FavBadge from 'components/FavBadge';
 import HomeRoute from 'routes/HomeRoute';
+import photos from 'mocks/photos';
+import topics from 'mocks/topics';
 
 // Note: Rendering a single component to build components in isolation
 const App = () => {
 
   // const photos = new Array(3).fill(<PhotoListItem photoData={sampleDataForPhotoListItem} />);
+
+  const mockPhotos = photos;
+
+  const mockTopics = topics;
+
   return (
     <div className="App">
       <HomeRoute>
 
         <TopNavigation>
-          <TopicList />
+          <TopicList topicList={mockTopics} />
           <FavBadge />
         </TopNavigation>
-        <PhotoList />
+        <PhotoList photoDataList={mockPhotos} />
       </HomeRoute>
       {/* <PhotoListItem photoData={sampleDataForPhotoListItem} /> */}
       {/* <PhotoListItem photoData={sampleDataForPhotoListItem} /> */}
