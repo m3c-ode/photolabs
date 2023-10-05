@@ -13,3 +13,7 @@
  * @prop {string} user.name
  * @prop {string} user.profile
  */
+
+/**
+ * @typedef  {{id: string, slug: string, title: string}} TopicData
+ */
