@@ -1,11 +1,5 @@
 import React from 'react';
-
-import PhotoListItem from './components/PhotoListItem';
 import './App.scss';
-import PhotoList from 'components/PhotoList';
-import TopicList from 'components/TopicList';
-import TopNavigation from 'components/TopNavigationBar';
-import FavBadge from 'components/FavBadge';
 import HomeRoute from 'routes/HomeRoute';
 import photos from 'mocks/photos';
 import topics from 'mocks/topics';
@@ -13,7 +7,7 @@ import topics from 'mocks/topics';
 // Note: Rendering a single component to build components in isolation
 const App = () => {
 
-  // const photos = new Array(3).fill(<PhotoListItem photoData={sampleDataForPhotoListItem} />);
+
 
   const mockPhotos = photos;
 
@@ -21,18 +15,15 @@ const App = () => {
 
   return (
     <div className="App">
-      <HomeRoute>
-
+      {/* <HomeRoute>
         <TopNavigation>
           <TopicList topicList={mockTopics} />
-          <FavBadge />
+          // {/* IF there's a favorite, add to is
+          <FavBadge isFavPhotoExist={!!favorites.length}/>
         </TopNavigation>
         <PhotoList photoDataList={mockPhotos} />
-      </HomeRoute>
-      {/* <PhotoListItem photoData={sampleDataForPhotoListItem} /> */}
-      {/* <PhotoListItem photoData={sampleDataForPhotoListItem} /> */}
-      {/* <PhotoListItem photoData={sampleDataForPhotoListItem} /> */}
-      {/* {photos} */}
+      </HomeRoute> */}
+      <HomeRoute topicList={mockTopics} photoList={mockPhotos} />
     </div>
   );
 };

@@ -13,7 +13,7 @@ const PhotoListItem = (props) => {
   const photoData = props.photoData;
   /* Insert React */
   return (
-    <div key={photoData.id} className="photo-list__item">
+    <div className="photo-list__item">
       <PhotoFavButton />
       <img className="photo-list__image" src={photoData.urls.regular} alt="img" />
       <div className="photo-list__user-details">

@@ -7,7 +7,6 @@ function PhotoFavButton() {
 
   const [selected, setSelected] = useState(false);
   const handleIconClick = () => {
-    // console.log('Mclicked');
     setSelected(!selected);
   };
 

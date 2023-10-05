@@ -15,7 +15,7 @@ const PhotoList = (props) => {
       {/* Insert React */}
       {photoDataList.map(photoData =>
         <li key={photoData.id}>
-          <PhotoListItem photoData={photoData} />
+          <PhotoListItem key={photoData.id} photoData={photoData} />
         </li>
       )}
     </ul>
