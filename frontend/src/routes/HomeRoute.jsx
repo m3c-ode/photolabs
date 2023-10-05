@@ -33,7 +33,7 @@ const HomeRoute = ({ topicList, photoList }) => {
       </TopNavigation>
       <PhotoList
         setFavorites={setFavorites}
-        photoDataList={photoList} />
+        photoDataList={isFavoritesSelected ? favorites : photoList} />
     </div>
   );
 };
