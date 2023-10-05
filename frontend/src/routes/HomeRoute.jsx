@@ -9,6 +9,7 @@ import '../styles/HomeRoute.scss';
 const HomeRoute = ({ topicList, photoList }) => {
 
   const [favorites, setFavorites] = useState([]);
+  console.log("🚀 ~ file: HomeRoute.jsx:12 ~ HomeRoute ~ favorites:", favorites);
 
   return (
     <div className="home-route">
@@ -18,7 +19,7 @@ const HomeRoute = ({ topicList, photoList }) => {
         {/* IF there's a favorite, add to is */}
         <FavBadge isFavPhotoExist={!!favorites.length} />
       </TopNavigation>
-      <PhotoList photoDataList={photoList} />
+      <PhotoList setFavorites={setFavorites} photoDataList={photoList} />
     </div>
   );
 };

@@ -7,8 +7,6 @@ import topics from 'mocks/topics';
 // Note: Rendering a single component to build components in isolation
 const App = () => {
 
-
-
   const mockPhotos = photos;
 
   const mockTopics = topics;
