@@ -14,16 +14,16 @@ import PhotoFavButton from "./PhotoFavButton";
 const PhotoListItem = (props) => {
   const photoData = props.photoData;
 
-  const [selected, setSelected] = useState(false);
-  const handleIconClick = () => {
-    // if already selected, remove from list (filter)
-    if (selected) {
-      props.setFavorites((favorites) => favorites.filter(photo => photo.id !== photoData.id));
-    } else {
-      props.setFavorites((favorites) => [...favorites, photoData]);
-    }
-    setSelected(!selected);
-  };
+  // const [selected, setSelected] = useState(false);
+  // const handleIconClick = () => {
+  //   // if already selected, remove from list (filter)
+  //   if (selected) {
+  //     props.setFavorites((favorites) => favorites.filter(photo => photo.id !== photoData.id));
+  //   } else {
+  //     props.setFavorites((favorites) => [...favorites, photoData]);
+  //   }
+  //   setSelected(!selected);
+  // };
 
 
   const handlePhotoClick = () => {
@@ -31,9 +31,11 @@ const PhotoListItem = (props) => {
     props.setPhotoData(photoData);
   };
 
+  // const isSelected = 
+
   return (
     <div className="photo-list__item">
-      <PhotoFavButton onClick={handleIconClick} selected={selected} />
+      <PhotoFavButton onClick={props.iconClick} selected={props.selected} />
       <img onClick={handlePhotoClick} className="photo-list__image" src={photoData.urls.regular} alt="img" />
       <div className="photo-list__user-details">
         <img className="photo-list__user-profile" src={photoData.user.profile} alt="profile" />

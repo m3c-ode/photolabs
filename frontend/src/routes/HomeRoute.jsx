@@ -6,14 +6,13 @@ import FavBadge from 'components/FavBadge';
 
 import '../styles/HomeRoute.scss';
 
-const HomeRoute = ({ topicList, photoList, displayModal, setPhotoData }) => {
+const HomeRoute = ({ topicList, photoList, displayModal, setPhotoData, iconClick, selected, favorites, setFavorites }) => {
 
-  const [favorites, setFavorites] = useState([]);
   const [isFavoritesSelected, setIsFavoritesSelected] = useState(false);
   console.log("🚀 ~ file: HomeRoute.jsx:12 ~ HomeRoute ~ favorites:", favorites);
 
 
-  const handleFavouritesClicked = () => {
+  const handleFavoritesClicked = () => {
     setIsFavoritesSelected(!isFavoritesSelected);
   };
 
@@ -23,13 +22,16 @@ const HomeRoute = ({ topicList, photoList, displayModal, setPhotoData }) => {
       <TopNavigation>
         <TopicList topicList={topicList} />
         <FavBadge
-          onClick={handleFavouritesClicked}
+          onClick={handleFavoritesClicked}
           selected={isFavoritesSelected}
           isFavPhotoExist={!!favorites.length}
         />
       </TopNavigation>
       <PhotoList
+        iconClick={iconClick}
+        selected={selected}
         setFavorites={setFavorites}
+        favorites={favorites}
         photoDataList={isFavoritesSelected ? favorites : photoList}
         displayModal={displayModal}
         setPhotoData={setPhotoData}

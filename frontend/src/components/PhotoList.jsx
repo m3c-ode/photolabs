@@ -2,33 +2,29 @@ import React, { useCallback, useState } from 'react';
 
 import "../styles/PhotoList.scss";
 import PhotoListItem from "./PhotoListItem";
+import { isSelected } from 'helpers';
 /**
  * 
  * @param {Object} props 
  * @param {PhotoDataList[]} props.photoDataList
+ * @param {PhotoDataList[]} props.favorites
  * @returns 
  */
 const PhotoList = (props) => {
   const { photoDataList } = props;
 
-  const [selected, setSelected] = useState(false);
-
-
   return (
     <ul className="photo-list">
-      {/* Insert React */}
       {photoDataList.map(photoData =>
         <li key={photoData.id}>
           <PhotoListItem
             key={photoData.id}
-            // favorites={props.favorites}
             photoData={photoData}
             setPhotoData={props.setPhotoData}
-
-            // onClick={handleIconClick}
+            iconClick={() => props.iconClick(photoData)}
+            selected={props.favorites ? isSelected(photoData.id, props.favorites) : false}
             setFavorites={props.setFavorites}
             displayModal={props.displayModal}
-          // selected={selected}
           />
         </li>
       )}

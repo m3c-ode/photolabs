@@ -10,6 +10,7 @@ import PhotoFavButton from 'components/PhotoFavButton';
  * 
  * @param {Object} props 
  * @param {function(*):void} props.displayModal
+ * @param {function(*):void} props.iconClick
  * @param {PhotoDataList} props.photoData
  * @returns 
  */
@@ -20,31 +21,16 @@ const PhotoDetailsModal = (props) => {
 
   const photoData = props.photoData;
 
+
+
   return (
     <div className="photo-details-modal">
       <button onClick={() => props.displayModal(false)} className="photo-details-modal__close-button">
         <img src={closeSymbol} alt="close symbol" />
       </button>
-      {/* <div className="photo-details-modal__image">
-        <img src={photoData.urls.full} alt="fullpic"
-          className="photo-details-modal__image"
-        />
-      </div>
-
-      <div className="photo-details-modal__top-bar">
-        <img className="photo-details-modal__photographer-profile" src={photoData.user.profile} alt="profile" />
-        <article className="photo-details-modal__photographer-info">
-          <span>{photoData.user.username}</span>
-          <div className="photo-details-modal__photographer-location">{photoData.location.city}, {photoData.location.country}</div>
-        </article>
-      </div>
-      <div className="photo-details-modal__images">
-        <PhotoList photoDataList={similarPhotos} />
-      </div> */}
-
       <div className="photo-details-modal__images">
         <PhotoFavButton
-        /* onClick={handleIconClick} selected={selected} */
+          onClick={() => props.iconClick(photoData)} selected={props.selected}
         />
         <img
           // onClick={handlePhotoClick}
