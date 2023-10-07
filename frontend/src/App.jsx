@@ -5,47 +5,38 @@ import photos from 'mocks/photos';
 import topics from 'mocks/topics';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 import { isSelected } from 'helpers';
+import useApplicationData from 'hooks/useApplicationData';
 
 // Note: Rendering a single component to build components in isolation
 const App = () => {
 
-  const mockPhotos = photos;
+  const {
+    // dbState, handleIconClick, favorites, photoData, setPhotoData, isModalVisible, setIsModalVisible,
+    state,
+    handleIconClick,
+    setState,
+    setPhotoData,
+    setIsModalVisible
+  } = useApplicationData();
 
-  const mockTopics = topics;
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [photoData, setPhotoData] = useState(null);
-  const [favorites, setFavorites] = useState([]);
-
-  const handleIconClick = (photoData) => {
-    // if already selected, remove from list (filter), or already present in the favorites list
-    if (isSelected(photoData.id, favorites)) {
-      setFavorites((favorites) => favorites.filter(photo => photo.id !== photoData.id));
-    } else {
-      setFavorites((favorites) => [...favorites, photoData]);
-    }
-    // setSelected(!selected);
-  };
-
+  const { photos, topics, favorites, isModalVisible, selectedPhoto } = state;
 
   return (
     <div className="App">
       <HomeRoute
         displayModal={setIsModalVisible}
-        topicList={mockTopics}
-        photoList={mockPhotos}
+        topicList={topics}
+        photoList={photos}
         setPhotoData={setPhotoData}
         iconClick={handleIconClick}
         favorites={favorites}
-        setFavorites={setFavorites}
-
       />
       {isModalVisible &&
         <PhotoDetailsModal
           iconClick={handleIconClick}
-          selected={isSelected(photoData.id, favorites)}
+          selected={isSelected(selectedPhoto.id, favorites)}
           displayModal={setIsModalVisible}
-          photoData={photoData}
+          photoData={selectedPhoto}
         />}
     </div>
   );

@@ -23,7 +23,6 @@ const PhotoList = (props) => {
             setPhotoData={props.setPhotoData}
             iconClick={() => props.iconClick(photoData)}
             selected={props.favorites ? isSelected(photoData.id, props.favorites) : false}
-            setFavorites={props.setFavorites}
             displayModal={props.displayModal}
           />
         </li>

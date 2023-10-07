@@ -15,7 +15,7 @@ function PhotoFavButton(props) {
     <div className="photo-list__fav-icon">
       <div onClick={props.onClick} className="photo-list__fav-icon-svg">
         {/* Insert React */}
-        <FavIcon displayAlert={!props.selected} selected={props.selected} />
+        <FavIcon /* displayAlert={!props.selected} */ selected={props.selected} />
       </div>
     </div>
   );

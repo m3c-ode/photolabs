@@ -30,7 +30,6 @@ const HomeRoute = ({ topicList, photoList, displayModal, setPhotoData, iconClick
       <PhotoList
         iconClick={iconClick}
         selected={selected}
-        setFavorites={setFavorites}
         favorites={favorites}
         photoDataList={isFavoritesSelected ? favorites : photoList}
         displayModal={displayModal}
