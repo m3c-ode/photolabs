@@ -12,14 +12,18 @@ const App = () => {
 
   const {
     // dbState, handleIconClick, favorites, photoData, setPhotoData, isModalVisible, setIsModalVisible,
-    state,
+    // state,
+    appState,
     handleIconClick,
-    setState,
+    // setState,
     setPhotoData,
     setIsModalVisible
   } = useApplicationData();
 
-  const { photos, topics, favorites, isModalVisible, selectedPhoto } = state;
+  // const { photos, topics, favorites, isModalVisible, selectedPhoto } = state;
+  const { photos, topics, favorites, isModalVisible, selectedPhoto } = appState;
+
+  console.log('modal visible', isModalVisible);
 
   return (
     <div className="App">
@@ -37,6 +41,8 @@ const App = () => {
           selected={isSelected(selectedPhoto.id, favorites)}
           displayModal={setIsModalVisible}
           photoData={selectedPhoto}
+          setPhotoData={setPhotoData}
+          favorites={favorites}
         />}
     </div>
   );

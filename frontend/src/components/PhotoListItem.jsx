@@ -27,6 +27,7 @@ const PhotoListItem = (props) => {
 
 
   const handlePhotoClick = () => {
+    console.log('click');
     props.displayModal(true);
     props.setPhotoData(photoData);
   };

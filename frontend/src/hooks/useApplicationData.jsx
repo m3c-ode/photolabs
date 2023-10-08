@@ -18,79 +18,111 @@ const useApplicationData = function(params) {
   // const [photoData, setPhotoData] = useState(null);
   // const [favorites, setFavorites] = useState([]);
 
-  // Setting intial values for mock photos and topics
+  // Setting initial values for mock photos and topics
 
-  const [state, setState] = useState(
-    /** 
-     * @type {{
-     * photos: PhotoDataList[], 
-     * topics: TopicData[], 
-     * selectedPhoto: PhotoDataList, 
-     * favorites: PhotoDataList,
-     * isModalVisible: boolean
-     * }} 
-    */
-    ({
-      photos: photos,
-      topics: topics,
-      selectedPhoto: null,
-      favorites: [],
-      isModalVisible: false,
-    }));
+  /**
+    * @typedef {{
+    * photos: PhotoDataList[], 
+    * topics: TopicData[], 
+    * selectedPhoto: PhotoDataList, 
+    * favorites: PhotoDataList[],
+    * isModalVisible: boolean
+    * }} AppState
+  */
+  /**
+   * @type {AppState}
+   */
+  const initialState = {
+    photos: photos,
+    topics: topics,
+    selectedPhoto: null,
+    favorites: [],
+    isModalVisible: false,
+  };
 
-  // const state = {
-  //   photos: photos,
-  //   topics: topics,
-  //   selectedPhoto: photoData,
-  //   favorites: favorites,
-  //   isModalVisible
+  // const [state, setState] = useState(initialState);
+
+  // With useState
+  // const handleIconClick = (photoData) => {
+  //   // if already selected, remove from list (filter), or already present in the favorites list
+  //   if (isSelected(photoData.id, state.favorites)) {
+  //     setState((state) => ({ ...state, favorites: state.favorites.filter(photo => photo.id !== photoData.id) }));
+  //   } else {
+  //     setState((state) => ({ ...state, favorites: [...state.favorites, photoData] }));
+  //   }
+  //   // setSelected(!selected);
   // };
 
-  // const reducerFunction = (state, action) => {
-  //   switch (action.type) {
-  //     case ACTIONS.SET_PHOTO_DATA:
+  // const setPhotoData = (photoData) => {
+  //   return setState((prevState) => ({ ...prevState, selectedPhoto: photoData }));
+  // };
 
-  //       break;
+  // const setIsModalVisible = () => {
+  //   return setState((prevState) => ({ ...prevState, isModalVisible: !prevState.isModalVisible }));
+  // };
 
-  //     default:
-  //       throw new Error(
-  //         `Tried to reduce with unsupported action type: ${action.type}`
-  //       );
-  //       // break;
-  //   }
-  // }
 
-  // const [state, setState] = useReducer(reducerFunction, initialState);
+  // with useReducer
+
+  /**
+  * 
+  * @param {AppState} state 
+  * @param {{type: string, value: Partial<AppState>}} action 
+  */
+  const reducerFunction = (state, action) => {
+    switch (action.type) {
+      case ACTIONS.SELECT_PHOTO:
+        return { ...state, selectedPhoto: action.value };
+        break;
+      case ACTIONS.DISPLAY_PHOTO_DETAILS:
+        return { ...state, isModalVisible: action.value };
+        break;
+      case ACTIONS.FAV_PHOTO_ADDED:
+        return ({ ...state, favorites: [...state.favorites, action.value] });
+      case ACTIONS.FAV_PHOTO_REMOVED:
+        return ({ ...state, favorites: [...state.favorites.filter(photo => photo.id !== action.value.id)] });
+
+      default:
+        throw new Error(
+          `Tried to reduce with unsupported action type: ${action.type}`
+        );
+      // break;
+    }
+  };
+
+
+  /**
+   * @type {[AppState, function({type: string, value: Partial<AppState>})]}
+   */
+  const [appState, setAppState] = useReducer(reducerFunction, initialState);
 
   const handleIconClick = (photoData) => {
     // if already selected, remove from list (filter), or already present in the favorites list
-    if (isSelected(photoData.id, state.favorites)) {
-      setState((state) => ({ ...state, favorites: state.favorites.filter(photo => photo.id !== photoData.id) }));
+    if (isSelected(photoData.id, appState.favorites)) {
+      setAppState({ type: ACTIONS.FAV_PHOTO_REMOVED, value: photoData });
     } else {
-      setState((state) => ({ ...state, favorites: [...state.favorites, photoData] }));
+      setAppState(({ type: ACTIONS.FAV_PHOTO_ADDED, value: photoData }));
     }
-    // setSelected(!selected);
   };
-
-  // setPhotoData, similarly 
 
   const setPhotoData = (photoData) => {
-    return setState((prevState) => ({ ...prevState, selectedPhoto: photoData }));
+    return setAppState({ type: ACTIONS.SELECT_PHOTO, value: photoData });
   };
 
-  // setIsModalIsVisible
-
-  const setIsModalVisible = () => {
-    return setState((prevState) => ({ ...prevState, isModalVisible: !prevState.isModalVisible }));
+  const setIsModalVisible = (value) => {
+    return setAppState({ type: ACTIONS.DISPLAY_PHOTO_DETAILS, value: value });
   };
 
+  // Return with useState
   return {
-    state,
+    appState,
     handleIconClick,
-    setState,
+    // setState,
     setPhotoData,
     setIsModalVisible
   };
+
+  // Return with useReducer
 };
 
 export default useApplicationData;

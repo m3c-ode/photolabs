@@ -15,12 +15,11 @@ import PhotoFavButton from 'components/PhotoFavButton';
  * @returns 
  */
 const PhotoDetailsModal = (props) => {
-
-  const similarPhotos = Object.values(props.photoData.similar_photos);
-
+  console.log("🚀 ~ file: PhotoDetailsModal.jsx:18 ~ PhotoDetailsModal ~ props:", props);
 
   const photoData = props.photoData;
 
+  const similarPhotos = Object.values(props.photoData.similar_photos);
 
 
   return (
@@ -44,7 +43,14 @@ const PhotoDetailsModal = (props) => {
         </div>
         <div className='photo-details-modal__header'>Similar Photos</div>
         {/* <div className="photo-details-modal__images"> */}
-        <PhotoList photoDataList={similarPhotos} />
+        <PhotoList
+          photoDataList={similarPhotos}
+          iconClick={props.iconClick}
+          selected={props.selected}
+          favorites={props.favorites}
+        // displayModal={props.displayModal}
+        // setPhotoData={props.setPhotoData}
+        />
         {/* </div> */}
       </div>
 
