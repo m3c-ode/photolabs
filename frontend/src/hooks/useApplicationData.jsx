@@ -1,7 +1,5 @@
 const { isSelected } = require("helpers");
-const { default: photos } = require("mocks/photos");
-const { default: topics } = require("mocks/topics");
-const { useState, useReducer } = require("react");
+const { useState, useReducer, useEffect } = require("react");
 
 export const ACTIONS = {
   FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
@@ -33,12 +31,43 @@ const useApplicationData = function(params) {
    * @type {AppState}
    */
   const initialState = {
-    photos: photos,
-    topics: topics,
+    photos: [],
+    topics: [],
     selectedPhoto: null,
     favorites: [],
     isModalVisible: false,
   };
+
+  useEffect(() => {
+    fetch("/api/photos")
+      .then(response => {
+        return response.json();
+      }
+      )
+      .then(data => {
+        setAppState({ type: ACTIONS.SET_PHOTO_DATA, value: data });
+      });
+
+    // return () => {
+    //   second;
+    // };
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/topics")
+      .then(response => {
+        return response.json();
+      }
+      )
+      .then(data => {
+        setAppState({ type: ACTIONS.SET_TOPIC_DATA, value: data });
+      });
+
+    // return () => {
+    //   second;
+    // };
+  }, []);
+
 
   // const [state, setState] = useState(initialState);
 
@@ -68,25 +97,36 @@ const useApplicationData = function(params) {
   * 
   * @param {AppState} state 
   * @param {{type: string, value: Partial<AppState>}} action 
+  * @returns {AppState}
   */
   const reducerFunction = (state, action) => {
     switch (action.type) {
-      case ACTIONS.SELECT_PHOTO:
+      case ACTIONS.SELECT_PHOTO: {
         return { ...state, selectedPhoto: action.value };
         break;
-      case ACTIONS.DISPLAY_PHOTO_DETAILS:
+      }
+      case ACTIONS.DISPLAY_PHOTO_DETAILS: {
         return { ...state, isModalVisible: action.value };
         break;
-      case ACTIONS.FAV_PHOTO_ADDED:
+      }
+      case ACTIONS.FAV_PHOTO_ADDED: {
         return ({ ...state, favorites: [...state.favorites, action.value] });
-      case ACTIONS.FAV_PHOTO_REMOVED:
+      }
+      case ACTIONS.FAV_PHOTO_REMOVED: {
         return ({ ...state, favorites: [...state.favorites.filter(photo => photo.id !== action.value.id)] });
-
-      default:
+      }
+      case ACTIONS.SET_PHOTO_DATA: {
+        return ({ ...state, photos: action.value });
+      }
+      case ACTIONS.SET_TOPIC_DATA: {
+        return ({ ...state, topics: action.value });
+      }
+      default: {
         throw new Error(
           `Tried to reduce with unsupported action type: ${action.type}`
         );
-      // break;
+        // break;
+      }
     }
   };
 
