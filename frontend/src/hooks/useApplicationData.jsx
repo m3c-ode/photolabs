@@ -54,32 +54,11 @@ const useApplicationData = function(params) {
   };
 
   const fetchTopicsPhotos = (topicId) => {
-    console.log('fetchign topics photos inside func');
-    console.log("🚀 ~ file: useApplicationData.jsx:57 ~ fetchTopicsPhotos ~ topicId:", topicId);
     return fetch(`/api/topics/photos/${topicId}`)
       .then(response => response.json())
       .then(data => data)
       .catch(error => console.log('error updating photo data list', error));
   };
-
-  // useEffect(() => {
-  //   const photosPromise = fetch("/api/photos")
-  //     .then(response => response.json())
-  //     .then(photosData => photosData);
-  //   const topicsPromise = fetch("/api/topics")
-  //     .then(response => response.json())
-  //     .then(topicsData => topicsData);
-
-  //   Promise.all([
-  //     photosPromise,
-  //     topicsPromise
-  //   ])
-  //     .then(([photosData, topicsData]) => {
-  //       setAppState({ type: ACTIONS.SET_PHOTO_DATA, value: photosData });
-  //       setAppState({ type: ACTIONS.SET_TOPIC_DATA, value: topicsData });
-  //     })
-  //     .catch((error) => console.log('error with promises', error));
-  // }, []);
 
   /**
   * 
