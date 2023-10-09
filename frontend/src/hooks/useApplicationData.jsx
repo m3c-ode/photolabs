@@ -153,13 +153,19 @@ const useApplicationData = function(params) {
     return setAppState({ type: ACTIONS.DISPLAY_PHOTO_DETAILS, value: value });
   };
 
+  const setPhotoListData = (photoList) => {
+    console.log('inside the custom hook');
+    return setAppState({ type: ACTIONS.SET_PHOTO_DATA, value: photoList });
+  };
+
   // Return with useState
   return {
     appState,
     handleIconClick,
     // setState,
     setPhotoData,
-    setIsModalVisible
+    setIsModalVisible,
+    setPhotoListData
   };
 
   // Return with useReducer

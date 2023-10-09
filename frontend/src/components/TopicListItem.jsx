@@ -15,7 +15,7 @@ const sampleDataForTopicListItem = {
 const TopicListItem = (props) => {
   const topicData = props.topicData;
   return (
-    <div className="topic-list__item">
+    <div onClick={() => props.onClick(topicData.id)} className="topic-list__item">
       <span>{topicData.title}</span>
     </div>
   );
