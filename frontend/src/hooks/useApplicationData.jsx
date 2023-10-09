@@ -7,7 +7,8 @@ export const ACTIONS = {
   SET_PHOTO_DATA: 'SET_PHOTO_DATA',
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
   SELECT_PHOTO: 'SELECT_PHOTO',
-  DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS'
+  DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS',
+  SELECT_TOPIC: 'SELECT_TOPIC'
 };
 
 const useApplicationData = function(params) {
@@ -20,7 +21,8 @@ const useApplicationData = function(params) {
     * topics: TopicData[], 
     * selectedPhoto: PhotoDataList, 
     * favorites: PhotoDataList[],
-    * isModalVisible: boolean
+    * isModalVisible: boolean,
+    * selectedTopic: string
     * }} AppState
   */
   /**
@@ -32,26 +34,52 @@ const useApplicationData = function(params) {
     selectedPhoto: null,
     favorites: [],
     isModalVisible: false,
+    selectedTopic: ""
   };
 
-  useEffect(() => {
-    const photosPromise = fetch("/api/photos")
+  const fetchAllPhotos = () => {
+    return fetch("/api/photos")
       .then(response => response.json())
-      .then(photosData => photosData);
-    const topicsPromise = fetch("/api/topics")
-      .then(response => response.json())
-      .then(topicsData => topicsData);
+      .then(photosData => photosData)
+      .catch(error => console.log('error fetching all photos', error));
 
-    Promise.all([
-      photosPromise,
-      topicsPromise
-    ])
-      .then(([photosData, topicsData]) => {
-        setAppState({ type: ACTIONS.SET_PHOTO_DATA, value: photosData });
-        setAppState({ type: ACTIONS.SET_TOPIC_DATA, value: topicsData });
-      })
-      .catch((error) => console.log('error with promises', error));
-  }, []);
+  };
+
+  const fetchAllTopics = () => {
+    return fetch("/api/topics")
+      .then(response => response.json())
+      .then(topicsData => topicsData)
+      .catch(error => console.log('error fetching topic list list', error));
+
+  };
+
+  const fetchTopicsPhotos = (topicId) => {
+    console.log('fetchign topics photos inside func');
+    console.log("🚀 ~ file: useApplicationData.jsx:57 ~ fetchTopicsPhotos ~ topicId:", topicId);
+    return fetch(`/api/topics/photos/${topicId}`)
+      .then(response => response.json())
+      .then(data => data)
+      .catch(error => console.log('error updating photo data list', error));
+  };
+
+  // useEffect(() => {
+  //   const photosPromise = fetch("/api/photos")
+  //     .then(response => response.json())
+  //     .then(photosData => photosData);
+  //   const topicsPromise = fetch("/api/topics")
+  //     .then(response => response.json())
+  //     .then(topicsData => topicsData);
+
+  //   Promise.all([
+  //     photosPromise,
+  //     topicsPromise
+  //   ])
+  //     .then(([photosData, topicsData]) => {
+  //       setAppState({ type: ACTIONS.SET_PHOTO_DATA, value: photosData });
+  //       setAppState({ type: ACTIONS.SET_TOPIC_DATA, value: topicsData });
+  //     })
+  //     .catch((error) => console.log('error with promises', error));
+  // }, []);
 
   /**
   * 
@@ -80,6 +108,9 @@ const useApplicationData = function(params) {
       case ACTIONS.SET_TOPIC_DATA: {
         return ({ ...state, topics: action.value });
       }
+      case ACTIONS.SELECT_TOPIC: {
+        return ({ ...state, selectedTopic: action.value });
+      }
       default: {
         throw new Error(
           `Tried to reduce with unsupported action type: ${action.type}`
@@ -89,11 +120,33 @@ const useApplicationData = function(params) {
     }
   };
 
-
   /**
-   * @type {[AppState, function({type: string, value: Partial<AppState>})]}
-   */
+  * @type {[AppState, function({type: string, value: Partial<AppState>})]}
+  */
   const [appState, setAppState] = useReducer(reducerFunction, initialState);
+
+  useEffect(() => {
+    fetchAllTopics()
+      .then(topicsData =>
+        setAppState({ type: ACTIONS.SET_TOPIC_DATA, value: topicsData })
+      );
+
+  }, []);
+
+
+  useEffect(() => {
+    if (appState.selectedTopic !== '') {
+      fetchTopicsPhotos(appState.selectedTopic)
+        .then(photosData =>
+          setAppState({ type: ACTIONS.SET_PHOTO_DATA, value: photosData })
+        );
+    } else {
+      fetchAllPhotos()
+        .then(photosData =>
+          setAppState({ type: ACTIONS.SET_PHOTO_DATA, value: photosData })
+        );
+    }
+  }, [appState.selectedTopic]);
 
   const handleIconClick = (photoData) => {
     // if already selected, remove from list (filter), or already present in the favorites list
@@ -116,12 +169,17 @@ const useApplicationData = function(params) {
     return setAppState({ type: ACTIONS.SET_PHOTO_DATA, value: photoList });
   };
 
+  const setSelectedTopic = (topicId) => {
+    return setAppState({ type: ACTIONS.SELECT_TOPIC, value: topicId });
+  };
+
   return {
     appState,
     handleIconClick,
     setPhotoData,
     setIsModalVisible,
-    setPhotoListData
+    setPhotoListData,
+    setSelectedTopic
   };
 
 };

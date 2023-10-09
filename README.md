@@ -64,6 +64,7 @@ Refer to the backend/readme file for detailed setup instructions for the API ser
 ## Features
 - View photos from the homepage fetched from the API.
 - Navigate to different photo categories (topics).
+- Revert back to all pictures by clicking on the logo in the navigation bar.
 - Click on a photo to view a larger version and related photos.
 - Like a photo from anywhere within the application.
 - View a heart icon with a notification in the navigation for liked photos.
