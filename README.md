@@ -5,6 +5,13 @@ This app fetches pictures from an API (defined in the `backend`), and renders th
 
 PhotoLabs is a React-based single-page application (SPA) that allows users to view photos in different contexts. This project combines the power of React with an Express.js backend and a PostgreSQL database to provide a seamless user experience for interacting with photos.
 
+## Final Product
+[Home Page](https://github.com/m3c-ode/photolabs/blob/main/frontend/screenshots/home.png)
+[Topic Selected](https://github.com/m3c-ode/photolabs/blob/main/frontend/screenshots/topic-selected.png)
+[Favorites Selected](https://github.com/m3c-ode/photolabs/blob/main/frontend/screenshots/favorites-selected.png)
+[Display Details Page](https://github.com/m3c-ode/photolabs/blob/main/frontend/screenshots/display-details.png)
+[Like Similar Pics](https://github.com/m3c-ode/photolabs/blob/main/frontend/screenshots/like-similar-photos.png)
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)
