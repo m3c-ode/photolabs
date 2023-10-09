@@ -1,36 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.scss';
 import HomeRoute from 'routes/HomeRoute';
-import photos from 'mocks/photos';
-import topics from 'mocks/topics';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 import { isSelected } from 'helpers';
 import useApplicationData from 'hooks/useApplicationData';
 
-// Note: Rendering a single component to build components in isolation
 const App = () => {
 
   const {
-    // dbState, handleIconClick, favorites, photoData, setPhotoData, isModalVisible, setIsModalVisible,
-    // state,
     appState,
     handleIconClick,
-    // setState,
     setPhotoData,
-    setIsModalVisible
+    setIsModalVisible,
   } = useApplicationData();
 
-  // const { photos, topics, favorites, isModalVisible, selectedPhoto } = state;
-  const { photos, topics, favorites, isModalVisible, selectedPhoto } = appState;
+  const { topics, favorites, isModalVisible, selectedPhoto } = appState;
 
-  console.log('modal visible', isModalVisible);
 
   return (
     <div className="App">
       <HomeRoute
         displayModal={setIsModalVisible}
         topicList={topics}
-        photoList={photos}
         setPhotoData={setPhotoData}
         iconClick={handleIconClick}
         favorites={favorites}

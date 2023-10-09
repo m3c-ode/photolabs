@@ -12,10 +12,6 @@ export const ACTIONS = {
 
 const useApplicationData = function(params) {
 
-  // const [isModalVisible, setIsModalVisible] = useState(false);
-  // const [photoData, setPhotoData] = useState(null);
-  // const [favorites, setFavorites] = useState([]);
-
   // Setting initial values for mock photos and topics
 
   /**
@@ -39,59 +35,23 @@ const useApplicationData = function(params) {
   };
 
   useEffect(() => {
-    fetch("/api/photos")
-      .then(response => {
-        return response.json();
-      }
-      )
-      .then(data => {
-        setAppState({ type: ACTIONS.SET_PHOTO_DATA, value: data });
-      });
+    const photosPromise = fetch("/api/photos")
+      .then(response => response.json())
+      .then(photosData => photosData);
+    const topicsPromise = fetch("/api/topics")
+      .then(response => response.json())
+      .then(topicsData => topicsData);
 
-    // return () => {
-    //   second;
-    // };
+    Promise.all([
+      photosPromise,
+      topicsPromise
+    ])
+      .then(([photosData, topicsData]) => {
+        setAppState({ type: ACTIONS.SET_PHOTO_DATA, value: photosData });
+        setAppState({ type: ACTIONS.SET_TOPIC_DATA, value: topicsData });
+      })
+      .catch((error) => console.log('error with promises', error));
   }, []);
-
-  useEffect(() => {
-    fetch("/api/topics")
-      .then(response => {
-        return response.json();
-      }
-      )
-      .then(data => {
-        setAppState({ type: ACTIONS.SET_TOPIC_DATA, value: data });
-      });
-
-    // return () => {
-    //   second;
-    // };
-  }, []);
-
-
-  // const [state, setState] = useState(initialState);
-
-  // With useState
-  // const handleIconClick = (photoData) => {
-  //   // if already selected, remove from list (filter), or already present in the favorites list
-  //   if (isSelected(photoData.id, state.favorites)) {
-  //     setState((state) => ({ ...state, favorites: state.favorites.filter(photo => photo.id !== photoData.id) }));
-  //   } else {
-  //     setState((state) => ({ ...state, favorites: [...state.favorites, photoData] }));
-  //   }
-  //   // setSelected(!selected);
-  // };
-
-  // const setPhotoData = (photoData) => {
-  //   return setState((prevState) => ({ ...prevState, selectedPhoto: photoData }));
-  // };
-
-  // const setIsModalVisible = () => {
-  //   return setState((prevState) => ({ ...prevState, isModalVisible: !prevState.isModalVisible }));
-  // };
-
-
-  // with useReducer
 
   /**
   * 
@@ -107,7 +67,6 @@ const useApplicationData = function(params) {
       }
       case ACTIONS.DISPLAY_PHOTO_DETAILS: {
         return { ...state, isModalVisible: action.value };
-        break;
       }
       case ACTIONS.FAV_PHOTO_ADDED: {
         return ({ ...state, favorites: [...state.favorites, action.value] });
@@ -154,21 +113,17 @@ const useApplicationData = function(params) {
   };
 
   const setPhotoListData = (photoList) => {
-    console.log('inside the custom hook');
     return setAppState({ type: ACTIONS.SET_PHOTO_DATA, value: photoList });
   };
 
-  // Return with useState
   return {
     appState,
     handleIconClick,
-    // setState,
     setPhotoData,
     setIsModalVisible,
     setPhotoListData
   };
 
-  // Return with useReducer
 };
 
 export default useApplicationData;
